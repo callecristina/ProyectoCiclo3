@@ -35,7 +35,7 @@ app.post("/add-usuario", async(request,response)=>{
 })
 
 app.get("/get-usuario",  async(request, response)=>{
-    const usuario=request.body
+    const usuario=request.query
     const identificador=usuario.identificador
     const[rows, field]=await connection.execute (`select * from usuarios WHERE identificador=${identificador}`)
 console.log(identificador)
