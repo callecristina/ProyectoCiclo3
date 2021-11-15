@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import ApiBaseUrl from "../Shared/utils/Api";
 
 export default function UsuariosPage() {
   const [nombre, setNombre] = useState("");
@@ -11,7 +12,7 @@ export default function UsuariosPage() {
 
   const getLista=async()=>{
     try{
-    const respuesta=await fetch("http://localhost:3001/get-lista")
+    const respuesta=await fetch(`${ApiBaseUrl}/get-lista`)
     const respuestajson=await respuesta.json()
     const respuestaUsuarios =respuestajson.data
     const listaUsuarios= respuestaUsuarios.map((usuario) => 

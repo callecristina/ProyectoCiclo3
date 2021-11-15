@@ -13,7 +13,7 @@ app.use(cors({origin:true}))
 app.set('port', process.env.PORT||port)
 
 app.get("/", (req,res)=>{
-    res.json("Backend MisionTic Shop")
+    res.json("Prueba de backend heroku ciclo 3")
 })
 
 app.get("/get-lista",  async(request, response)=>{
@@ -60,13 +60,20 @@ response.json(usuario);
 
 app.listen(app.get('port'), async()=>{
     connection = await mysql.createConnection({
-        host     : 'localhost',
-        user     : 'root',
-        password : 'MYSQL',
-        database : 'misticbd',
-        promise : bluebird,
+    //     host     : 'localhost',
+    //     user     : 'root',
+    //     password : 'MYSQL',
+    //     database : 'misticbd',
+
+    host:'sql10.freesqldatabase.com',
+    user: 'sql10451367',
+    password:'a2Rcaxa7x2',
+    database:'sql10451367',
+    port: 3306, 
+    Promise: bluebird,
+ 
       });
-    console.log("servir running on port "+port)
+    console.log("servir running on port "+app.get('port'))
 
 
 });

@@ -1,19 +1,21 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import ApiBaseUrl from "../Shared/utils/Api";
 
 export default function EditUsusariosPage() {
   const [rol, setRol] = useState("");
   const [estado, setEstado] = useState("");
   const [identificador, setIdentificador] = useState("");
   const[usuario,setUsuario]=useState("")
-const[infoUsuario,setInfoUsaurio]=useState({
-  rol:usuario.rol,
-  estado:usuario.estado,
-})
+
+// const[infoUsuario,setInfoUsaurio]=useState({
+//   rol:usuario.rol,
+//   estado:usuario.estado,
+// })
   
   const getUsuario=async()=>{
     try{
-    const respuesta=await fetch(`http://localhost:3001/get-usuario?identificador=${identificador}`)
+    const respuesta=await fetch(`${ApiBaseUrl}/get-usuario?identificador=${identificador}`)
     const respuestajson=await respuesta.json()
     const respuestaUsuario =respuestajson.data
     const usuario= respuestaUsuario.map((usuario) => 
@@ -33,44 +35,34 @@ const[infoUsuario,setInfoUsaurio]=useState({
     }
   }
 
-
-///función para editar rol
-
-
-
-  const editarRol=()=>{
+  async function editRol(){
+    
+    const url=`${ApiBaseUrl}/edit-rol? identificador=${identificador}& rol='${rol}'`
+    console.log(url)
     try{
-      (response)=>{console.log(response.data)}
-  //   const respuesta=await fetch(`http://localhost:3001/edit-rol? identificador=${identificador} & rol=${rol}`)
-  //   const respuestajson=await respuesta.json()
-  //   const respuestaUsuario =respuestajson.data
-  //   console.log(respuestaUsuario)
-
-  // setUsuario(usuario)
-  //   console.log(respuestaUsuario)
+      const respuesta=await fetch(url)
+      const respuestajson=await respuesta.json()
+      const respuestaUsuario =respuestajson.data
+      console.log(respuestaUsuario)
     }
     catch(error){
-      
       console.log(error)
+
     }
-  }
-
-  const editarEstado=()=>{    try{
-    (response)=>{console.log(response.data)}
-//   const respuesta=await fetch(`http://localhost:3001/edit-rol? identificador=${identificador} & rol=${rol}`)
-//   const respuestajson=await respuesta.json()
-//   const respuestaUsuario =respuestajson.data
-//   console.log(respuestaUsuario)
-
-// setUsuario(usuario)
-//   console.log(respuestaUsuario)
-  }
-  catch(error){
     
-    console.log(error)
+    
+
   }
+function sayhi(){
+  alert("hi")
 }
 
+
+ async function editEstado(){
+    const respuesta=await fetch(`${ApiBaseUrl}/edit-estado? identificador=${identificador}& estado='${estado}'`)
+    
+
+  }
 
 
 
@@ -90,7 +82,7 @@ const[infoUsuario,setInfoUsaurio]=useState({
             setIdentificador(identificador.target.value)
           }
         />
-        <button class="btn btn-outline-success" type="submit">
+        <button class="btn btn-outline-success" type="submit" onClick={getUsuario()}>
           Buscar
         </button>
       </form>
@@ -110,25 +102,26 @@ const[infoUsuario,setInfoUsaurio]=useState({
       </table>
       <h1>Editar</h1>
       <input
-        value={infoUsuario.rol}
         class="form-control"
         type="text"
         placeholder="Rol"
         aria-label="default input example"
-        onChange={(r) => setInfoUsaurio({...infoUsuario,rol:r.target.value})}
+        onChange={(rol)=>setRol(rol.target.value)}
+        // onChange={(r) => setInfoUsaurio({...infoUsuario,rol:r.target.value})}
       ></input>
-      <button type="button" class="btn btn-primary">
+      <button type="button" class="btn btn-primary" onClick={editRol}>
         Cambiar
       </button>
       <input
-        value={infoUsuario.estado}
         class="form-control"
         type="text"
         placeholder="Estado"
         aria-label="default input example"
-        onChange={(e) => setInfoUsaurio({...setInfoUsaurio,estado:e.target.value})}
+        onChange={(estado)=>setEstado(estado.target.value)}
+        // onChange={(e) => setInfoUsaurio({...setInfoUsaurio,estado:e.target.value})}
+
       ></input>
-      <button type="button" class="btn btn-primary">
+      <button type="button" class="btn btn-primary" onClick={editEstado}>
         Cambiar
       </button>
 
